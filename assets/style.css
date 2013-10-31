@@ -1,0 +1,22 @@
+/*
+ * style.css
+ */
+
+body {
+    overflow-y: scroll;
+    padding: 40px;
+}
+div.hidden {
+    display: none;
+}
+.hero-unit {
+    padding: 40px;
+}
+.container-narrow {
+    margin: 0 auto;
+    max-width: 700px;
+}
+a:hover {
+    border: 0px;
+    text-decoration: none;
+}
