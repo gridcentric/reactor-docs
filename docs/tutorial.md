@@ -6,4 +6,6 @@ layout: normal
 * TOC
 {:toc}
 
-In progress.
+This tutorial is a work in progress.
+
+Please complain to the folks @ [Gridcentric](mailto:info@gridcentric.com).
