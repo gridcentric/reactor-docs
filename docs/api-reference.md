@@ -39,7 +39,7 @@ GET /
 
 Data: none.
 
-Result: ``"version": *api-version*``
+Result: `{"version": *api-version*}`
 
 Example:
 
@@ -135,7 +135,7 @@ GET /v1.1/url
 
 Data: none.
 
-Result: ``"url": *url*``
+Result: `{"url": *url*}`
 
 Example:
 
@@ -156,7 +156,7 @@ Content-Length: 25
 POST /v1.1/url
 </pre>
 
-Data: `"url": *url*`
+Data: `{"url": *url*}`
 
 Result: `none.`
 
@@ -181,7 +181,7 @@ GET /v1.1/info
 
 Data: none.
 
-Result: ``"active": *active*, "instances": *instances*, "managers": *managers*, "endpoints": {*state*: *state-count*, ...}``
+Result: `{"active": *active*, "instances": *instances*, "managers": *managers*, "endpoints": {*state*: *state-count*, ...}`
 
 Example:
 
@@ -251,7 +251,7 @@ GET /v1.1/managers
 
 Data: none.
 
-Result: ``"active": [*manager*, ...], "configured": [*manager*, ...]``
+Result: `{"active": [*manager*, ...], "configured": [*manager*, ...]}`
 
 Example:
 
@@ -301,7 +301,7 @@ Result: `none or validation errors.`
 
 Example:
 
-    curl -i --data '``' -H "Content-Type: application/json" -H "Accept: application/json" -X POST http://localhost:8080/v1.1/managers/127.0.0.1
+    curl -i --data '{}' -H "Content-Type: application/json" -H "Accept: application/json" -X POST http://localhost:8080/v1.1/managers/127.0.0.1
 
 <pre class="alert alert-info">
 HTTP/1.0 200 OK
@@ -414,7 +414,28 @@ Result: `none or validation errors.`
 
 Example:
 
-    curl -i --data '``' -H "Content-Type: application/json" -H "Accept: application/json" -X POST http://localhost:8080/v1.1/endpoints/demo
+    curl -i --data '{}' -H "Content-Type: application/json" -H "Accept: application/json" -X POST http://localhost:8080/v1.1/endpoints/demo
+
+<pre class="alert alert-info">
+HTTP/1.0 200 OK
+Server: PasteWSGIServer/0.5 Python/2.7.3
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+</pre>
+
+## Create Endpoint Alias
+
+<pre class="alert alert-success">
+POST /v1.1/endpoints/`endpoint`/alias
+</pre>
+
+Data: A JSON string with the alias name.
+
+Result: `none.`
+
+Example:
+
+    curl -i --data '"new_name"' -H "Content-Type: application/json" -H "Accept: application/json" -X POST http://localhost:8080/v1.1/endpoints/demo/alias
 
 <pre class="alert alert-info">
 HTTP/1.0 200 OK
@@ -501,7 +522,7 @@ GET /v1.1/endpoint/metrics
 
 Data: none.
 
-Result: ``*metric*: *value*, ...``
+Result: `{*metric*: *value*, ...}`
 
 Example:
 
@@ -513,19 +534,19 @@ Server: PasteWSGIServer/0.5 Python/2.7.3
 Content-Type: text/html; charset=UTF-8
 Content-Length: 2
 
-``
+{}
 </pre>
 
 ## Get Endpoint IP Metrics
 
 <pre class="alert alert-success">
-GET /v1.1/endpoints/`endpoint}/metrics/{ip`
+GET /v1.1/endpoints/`endpoint`/metrics/`ip`
 GET /v1.1/endpoint/metrics/`ip`
 </pre>
 
 Data: none.
 
-Result: ``*metric*: [*weight*, *value*], ...``
+Result: `{*metric*: [*weight*, *value*], ...}`
 
 Example:
 
@@ -537,13 +558,13 @@ Server: PasteWSGIServer/0.5 Python/2.7.3
 Content-Type: text/html; charset=UTF-8
 Content-Length: 2
 
-``
+{}
 </pre>
 
 ## Set Endpoint IP Metrics
 
 <pre class="alert alert-success">
-POST /v1.1/endpoints/`endpoint}/metrics/{ip`
+POST /v1.1/endpoints/`endpoint`/metrics/`ip`
 POST /v1.1/endpoint/metrics/`ip`
 POST /v1.1/endpoint/metrics
 </pre>
@@ -572,7 +593,7 @@ GET /v1.1/endpoint/state
 
 Data: none.
 
-Result: ``"state": <endpoint-state>, "active": [<active-backend>, ...], "manager": <manager-uuid>``
+Result: `{"state": <endpoint-state>, "active": [<active-backend>, ...], "manager": <manager-uuid>}`
 
 Example:
 
@@ -596,7 +617,7 @@ GET /v1.1/endpoint/sessions
 
 Data: none.
 
-Result: ``*client*:*port*: *backend*:*port*, ...``
+Result: `{"*client*:*port*": "*backend*:*port*", ...}`
 
 Example:
 
@@ -608,13 +629,13 @@ Server: PasteWSGIServer/0.5 Python/2.7.3
 Content-Type: text/html; charset=UTF-8
 Content-Length: 2
 
-``
+{}
 </pre>
 
 ## Query Endpoint Session
 
 <pre class="alert alert-success">
-GET /v1.1/endpoints/`endpoint}/sessions/{session`
+GET /v1.1/endpoints/`endpoint`/sessions/`session`
 GET /v1.1/endpoint/sessions/`session`
 </pre>
 
@@ -638,7 +659,7 @@ null
 ## Drop Endpoint Session
 
 <pre class="alert alert-success">
-DELETE /v1.1/endpoints/`endpoint}/sessions/{session`
+DELETE /v1.1/endpoints/`endpoint`/sessions/`session`
 DELETE /v1.1/endpoint/sessions/`session`
 </pre>
 
@@ -649,6 +670,74 @@ Result: `none.`
 Example:
 
     curl -i -H "Accept: application/json" -X DELETE http://localhost:8080/v1.1/endpoints/demo/sessions/127.0.0.1:38273
+
+<pre class="alert alert-info">
+HTTP/1.0 200 OK
+Server: PasteWSGIServer/0.5 Python/2.7.3
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+</pre>
+
+## List Endpoint Instances
+
+<pre class="alert alert-success">
+GET /v1.1/endpoints/`endpoint`/instances
+GET /v1.1/endpoint/instances
+</pre>
+
+Data: none.
+
+Result: `["*instance_id*", ...]`
+
+Example:
+
+    curl -i -H "Accept: application/json" -X GET http://localhost:8080/v1.1/endpoints/demo/sessions
+
+<pre class="alert alert-info">
+HTTP/1.0 200 OK
+Server: PasteWSGIServer/0.5 Python/2.7.3
+Content-Type: text/html; charset=UTF-8
+Content-Length: 2
+
+[]
+</pre>
+
+## Associate Endpoint Instance
+
+<pre class="alert alert-success">
+POST /v1.1/endpoints/`endpoint`/instances/`instance_id`
+POST /v1.1/endpoint/instances/`instance_id`
+</pre>
+
+Data: none.
+
+Result: `none.`
+
+Example:
+
+    curl -i -H "Accept: application/json" -X POST http://localhost:8080/v1.1/endpoints/demo/instances/93818b24-ef97-4be4-82f3-1ea494a22fd9
+
+<pre class="alert alert-info">
+HTTP/1.0 200 OK
+Server: PasteWSGIServer/0.5 Python/2.7.3
+Content-Type: text/html; charset=UTF-8
+Content-Length: 0
+</pre>
+
+## Disassociate Endpoint Instance
+
+<pre class="alert alert-success">
+DELETE /v1.1/endpoints/`endpoint`/instances/`instance_id`
+DELETE /v1.1/endpoint/instances/`instance_id`
+</pre>
+
+Data: none.
+
+Result: `none.`
+
+Example:
+
+    curl -i -H "Accept: application/json" -X DELETE http://localhost:8080/v1.1/endpoints/demo/instances/93818b24-ef97-4be4-82f3-1ea494a22fd9
 
 <pre class="alert alert-info">
 HTTP/1.0 200 OK
