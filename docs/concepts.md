@@ -7,12 +7,15 @@ layout: normal
 {:toc}
 
 # Applications
-A Reactor-managed application is a cloud-based application that is load balanced and managed by one or more Reactor Virtual Appliances. The application can be an HTTP-based web service, an arbitrary network socket-based service (such as a memcached service), or even a non-service-based networked application (such as a Hadoop map-reduce cluster).
+A Reactor-managed application is a cloud-based application that is load balanced and managed by one or more Reactor instances. The application can be an HTTP-based web service, an arbitrary network socket-based service (such as a memcached service), or even a non-service-based networked application (such as a Hadoop map-reduce cluster).
 
 Reactor-managed applications have the following properties:
 * **Scalable** - The application is built from functionally-equivalent virtual *infrastructure blocks* - for example, web servers, memcached servers, or Hadoop workers. Infrastructure blocks can be added and removed from the system dynamically, and are based off of a common *template* - they differ from each other only by their runtime identification (e.g. hostnames and IP addresses) and runtime working sets (e.g. active users, active sessions, or active applications).
 * **Measurable** - Load on the application is definable and measurable by *metrics* - for example, number of current connections, number or active sessions, number of active applications, etc.
 * **Responsive** - There is a mapping between application load and the number of infrastructure blocks needed to service that load. Put another way: increasing the number of infrastructure blocks increases the capacity of the application to handle load.
+
+An application is composed of one or more endpoints. Each endpoint 
+How you define the exact boundaries of your application is up to you. For example, an application may consist of multiple endpoints or a single one.
 
 # Reactors
 Reactors are running instances of the Reactor Virtual Appliance. A Reactor-managed application will have one or more Reactor Virtual Appliances. Each Reactor coordinates with other Reactors to cooperatively load balance and manage the application. For HTTP-based applications, Reactors can also be configured to act as front-end load balancers (a.k.a. "reverse proxies") for the application.
