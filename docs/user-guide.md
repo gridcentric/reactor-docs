@@ -206,13 +206,13 @@ The parameters have the following meanings:
   * `password` - The OpenStack password for the cloud this endpoint resides in.
   * `tenant_name` - The OpenStack project for the cloud this endpoint resides in.
 
-The configuration file is pushed to Reactor using the `reactor update` command:
+The configuration file is pushed to Reactor using the `reactor create` command:
 
-    reactor update <endpoint name> < <path to config file>
+    reactor create <endpoint name> < <path to config file>
 
 For example:
 
-    reactor update www-production < www-production.conf
+    reactor create www-production < www-production.conf
 
 ### Starting an endpoint
 
