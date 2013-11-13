@@ -78,7 +78,7 @@ You can install the Reactor packages directly from source.
 
 You can either use `pip` to install the packages.
 
-    sudo pip install https://raw.github.com/gridcentric/reactor-core/master/setup.py
+    sudo pip install https://github.com/gridcentric/reactor-core/archive/master.zip
 
 Or, you can clone the repo and run `setup.py`.
 
