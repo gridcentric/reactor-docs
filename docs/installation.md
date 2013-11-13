@@ -33,7 +33,7 @@ you will need to configure bindings with your load balancer.
 The following two sections synthesize the download instructions found elsewhere
 for the two main distros.
 
-## Ubuntu
+## Ubuntu / Debian
 
 First get our public key.
 
@@ -48,7 +48,7 @@ Now let apt do its job.
     sudo apt-get update
     sudo apt-get install -y reactor-server
 
-## Centos 6.x
+## Centos 6.x / RHEL
 
 In this case, you need to enable the EPEL repository to pull in additioinal dependencies.
 
