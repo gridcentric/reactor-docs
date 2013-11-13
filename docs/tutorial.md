@@ -164,9 +164,6 @@ configuration for the endpoint. Below is my configuration.
     filter_instances = False
 
 The `image_id` above is the image created by the `nova image-create` command.
-If I were using VMS and I blessed the instance, I could simply provide the
-`instance_id` of the live-image and wouldn't need to provide the `flavor_id` or
-`image_id`.
 
 Once you've tuned this configuration to match your own setup, you can create
 the endpoint. I saved this file as `wordpress.conf`.
@@ -174,6 +171,36 @@ the endpoint. I saved this file as `wordpress.conf`.
     reactor create wordpress < wordpress.conf
 
 You should now see the `wordpress` endpoint in `reactor list`.
+
+## Virtual Memory Streaming
+
+If the target OpenStack cloud is [VMS-enabled](http://www.gridcentric.com),
+instead of using `nova image-create`, you can use `nova live-image-create`.
+
+You would then provide the `instance_id` of the live-image instead of the
+`flavor_id` or `image_id` in the `cloud:osvms` section. Then set the `cloud`
+key to `osvms`.
+
+In this case, the configuration would look similar to the following.
+
+    [endpoint]
+    url = http://example.com
+    port = 80
+    cloud = osvms
+    loadbalancer = nginx
+
+    [cloud:osvms]
+    auth_url = http://10.1.1.1:5000/v2.0/
+    username = thisismyusername
+    password = thisismypassword
+    tenant_name = thisismytenant
+    instance_id = f52f71ea-7489-402d-9b4d-ce5c0d9e5fd5
+    instance_name = wordpress-server
+    security_groups = wordpress
+    filter_instances = False
+
+By using [VMS](http://www.gridcentric.com), instances run in a fraction of the
+memory and start instantly -- allowing for much better elasiticity.
 
 # Associating Instances
 
