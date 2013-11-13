@@ -243,19 +243,19 @@ Content-Length: 0
 
 # Managers
 
-## List Managers
+## List Manager Configurations
 
 <pre class="alert alert-success">
-GET /v1.1/managers
+GET /v1.1/managers/configs
 </pre>
 
 Data: none.
 
-Result: `{"active": [*manager*, ...], "configured": [*manager*, ...]}`
+Result: `[*manager*, ...]`
 
 Example:
 
-    curl -i -H "Accept: application/json" -X GET http://localhost:8080/v1.1/managers
+    curl -i -H "Accept: application/json" -X GET http://localhost:8080/v1.1/managers/configs
 
 <pre class="alert alert-info">
 HTTP/1.0 200 OK
@@ -263,36 +263,82 @@ Server: PasteWSGIServer/0.5 Python/2.7.3
 Content-Type: text/html; charset=UTF-8
 Content-Length: 100
 
-`"active": {}, "configured": ["172.0.0.1", "10.0.2.15", "192.168.1.2", "10.0.3.1", "192.168.122.1"]`
+["172.0.0.1", "10.0.2.15", "192.168.1.2", "10.0.3.1", "192.168.122.1"]
 </pre>
 
-## Get Manager Configuration
+## List Active Managers
 
 <pre class="alert alert-success">
-GET /v1.1/managers/`manager`
+GET /v1.1/managers/active
 </pre>
 
 Data: none.
 
-Result: `The full configuration along with *info* and *uuid*.`
+Result: `[*manager*, ...]`
 
 Example:
 
-    curl -i -H "Accept: application/json" -X GET http://localhost:8080/v1.1/managers/127.0.0.1
+    curl -i -H "Accept: application/json" -X GET http://localhost:8080/v1.1/managers/active
 
 <pre class="alert alert-info">
 HTTP/1.0 200 OK
 Server: PasteWSGIServer/0.5 Python/2.7.3
 Content-Type: text/html; charset=UTF-8
-Content-Length: 28
+Content-Length: 39
 
-`"info": null, "uuid": null`
+`["6eaeca66-4992-4353-896c-915897e5f92b"]`
+</pre>
+
+## Get Manager Configuration
+
+<pre class="alert alert-success">
+GET /v1.1/managers/configs/`manager`
+</pre>
+
+Data: none.
+
+Result: `The full configuration.`
+
+Example:
+
+    curl -i -H "Accept: application/json" -X GET http://localhost:8080/v1.1/managers/configs/127.0.0.1
+
+<pre class="alert alert-info">
+HTTP/1.0 200 OK
+Server: PasteWSGIServer/0.5 Python/2.7.3
+Content-Type: text/html; charset=UTF-8
+Content-Length: 2
+
+`{}`
+</pre>
+
+## Get Manager Info
+
+<pre class="alert alert-success">
+GET /v1.1/managers/active/`manager`
+</pre>
+
+Data: none.
+
+Result: `{"name":*name*, "clouds":[*cloud*, ...], "loadbalancers":[*loadbalancer*, ...], ...}`
+
+Example:
+
+    curl -i -H "Accept: application/json" -X GET http://localhost:8080/v1.1/managers/active/6eaeca66-4992-4353-896c-915897e5f92b
+
+<pre class="alert alert-info">
+HTTP/1.0 200 OK
+Server: PasteWSGIServer/0.5 Python/2.7.3
+Content-Type: text/html; charset=UTF-8
+Content-Length: 39
+
+`{"name":"127.0.0.1", ...}`
 </pre>
 
 ## Create or Set Manager Configuration
 
 <pre class="alert alert-success">
-POST /v1.1/managers/`manager`
+POST /v1.1/managers/configs/`manager`
 </pre>
 
 Data: The full configuration.
@@ -301,7 +347,7 @@ Result: `none or validation errors.`
 
 Example:
 
-    curl -i --data '{}' -H "Content-Type: application/json" -H "Accept: application/json" -X POST http://localhost:8080/v1.1/managers/127.0.0.1
+    curl -i --data '{}' -H "Content-Type: application/json" -H "Accept: application/json" -X POST http://localhost:8080/v1.1/managers/configs/127.0.0.1
 
 <pre class="alert alert-info">
 HTTP/1.0 200 OK
@@ -310,10 +356,10 @@ Content-Type: text/html; charset=UTF-8
 Content-Length: 0
 </pre>
 
-## Delete Manager
+## Delete Manager Configuration
 
 <pre class="alert alert-success">
-DELETE /v1.1/managers/`manager`
+DELETE /v1.1/managers/configs/`manager`
 </pre>
 
 Data: none.
@@ -322,7 +368,7 @@ Result: `none.`
 
 Example:
 
-    curl -i -H "Accept: application/json" -X DELETE http://localhost:8080/v1.1/managers/127.0.0.1
+    curl -i -H "Accept: application/json" -X DELETE http://localhost:8080/v1.1/managers/configs/127.0.0.1
 
 <pre class="alert alert-info">
 HTTP/1.0 200 OK
@@ -334,7 +380,7 @@ Content-Length: 0
 ## Get Manager Log
 
 <pre class="alert alert-success">
-GET /v1.1/managers/`manager`/log?since=`since`
+GET /v1.1/managers/log/`manager`?since=`since`
 </pre>
 
 Data: none.
@@ -343,7 +389,7 @@ Result: `[[*timestamp*, *severity*, *message*], ...]`
 
 Example:
 
-    curl -i -H "Accept: application/json" -X GET http://localhost:8080/v1.1/managers/127.0.0.1/log
+    curl -i -H "Accept: application/json" -X GET http://localhost:8080/v1.1/managers/log/127.0.0.1
 
 <pre class="alert alert-info">
 TTP/1.0 200 OK
