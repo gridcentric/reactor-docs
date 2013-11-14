@@ -24,6 +24,10 @@ Simply download this file, and pass it as the user-data to a new instance.
 
     nova boot ... --user-data=setup-server.sh reactor-instance
 
+NOTE: You'll want to ensure that security groups are set up appropriately for
+the Reactor instance. The default API port is 8080, but by default this is
+connected through default http and https endpoints.
+
 # From Packages
 
 Reactor is normally installed from cloud-init, but you may choose to install it
