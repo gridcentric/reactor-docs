@@ -258,7 +258,7 @@ Now let's make this more interesting. At the moment, this endpoint is paused.
 This means that it won't add or remove any instances (it's a neutral state).
 Before we unpause it, let's set approximate minimums and maximums.
 
-    reactor set wordpress scaling min_instances 1
+    reactor set wordpress scaling min_instances 3
     reactor set wordpress scaling max_instances 5
 
 Looking at the metrics above, set some interesting metrics. Reactor will
@@ -270,5 +270,9 @@ Let's set something a bit ridiculous so we can see the scaling in action.
 That looks good, let's start it up.
 
     reactor start wordpress
+
+The first thing that will happen is that you will need two new instances
+launch. This is because of the minimum that we set above. These new instances
+will be seamlessly added to all the loadbalancers that Reactor is managing.
 
 Now hit your site with a lot of clicks, and watch new instances come and go.
